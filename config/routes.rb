@@ -70,6 +70,9 @@ Rails.application.routes.draw do
           get :app
         end
       end
+      namespace :notices do
+        resource :count, only: [:show], defaults: { format: 'json' }
+      end
     end
   end
 

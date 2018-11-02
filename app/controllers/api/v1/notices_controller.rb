@@ -11,11 +11,6 @@ class Api::V1::NoticesController < ApplicationController
       query = { created_at: { "$lte" => end_date, "$gte" => start_date } }
     end
 
-    if params.key?(:api_key)
-      app = App.find_by(api_key: params[:api_key])
-      query = query.merge(app_id: app.id)
-    end
-
     results = benchmark("[api/v1/notices_controller] query time") do
       Notice.where(query).with(consistency: :strong).only(fields).to_a
     end
